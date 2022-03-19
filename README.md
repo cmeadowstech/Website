@@ -2,11 +2,11 @@
 For the Cloud Resume Challenge - https://cloudresumechallenge.dev/docs/the-challenge/azure/
 
 1. ~~Certification~~
-2. ~~HTML
-3. ~~CSS
-4. ~~Static Website
-5. ~~HTTPS
-6. ~~DNS
+2. ~~HTML~~
+3. ~~CSS~~
+4. ~~Static Website~~
+5. ~~HTTPS~~
+6. ~~DNS~~
 7. Javascript
 8. Database
 9. API
