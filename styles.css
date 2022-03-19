@@ -1,0 +1,35 @@
+body {
+	background-color: #fafbfc;
+	font-family: 'Trebuchet MS'; sans-serif;
+}
+
+#main {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	max-width: 800px;
+	margin: auto;
+}
+
+.section {
+	border-radius: 10px;
+	border: 1px #344869 dashed;
+	padding: 10px;
+	margin: 5px;
+}
+
+#head {
+	text-align: center;
+}
+
+h1, h2 {
+	color: #0c2d63;
+}
+
+.company {
+	font-weight: bold;
+}
+
+.position {
+	font-style: italic;
+}
