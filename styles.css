@@ -52,11 +52,12 @@ table {
 
 body {
 	background-image: url("papyrus.png");
-	font-family: 'Trebuchet MS'; sans-serif;
+	font-family: 'Trebuchet MS', sans-serif;
 	line-height: 1.6em;
 }
 
 #main {
+	filter: drop-shadow(0 0 0.75rem rgba(0,0,0,.2));
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -64,15 +65,19 @@ body {
 	margin: auto;
 }
 
+.section_head {
+	background-color: #2B303A;
+	padding: .5em;
+	margin: 0 0 .5em 0;
+}
+
 .section {
 	background-color: #fafbfc;
 	border-radius: 5px;
-	border: 1px #344869 dashed;
-	padding: 1em;
-	margin: .5em;
 }
 
 #head {
+	background-color: #F06543;
 	text-align: center;
 }
 
@@ -92,21 +97,41 @@ body {
 /* Fonts and styling */
 
 h1 {
-	color: #1593d6;
+	color: #ffffff;
 	font-size: 2em;
+	font-weight: bold;
 	padding: 1em 0 0 0;
 }
 
 h2 {
-	color: #1593d6;
+	color: #ffffff;
 	font-size: 1.4em;
-	padding: 0 0 .5em 0;
 	text-transform: uppercase;
+}
+
+h3 {
+	color: white;
+}
+
+p {
+	padding: 0 .7em;
+}
+
+p.company {
+	color: #27A8D5;
+}
+
+b {
+	color: #27A8D5;
+}
+
+.position {
+	margin: 0 0 .5em 0;
 }
 
 ul {
 	list-style: circle inside;
-	padding: .7em 0;
+	padding: 0 .7em .7em .7em;
 }
 
 b {
@@ -114,10 +139,13 @@ b {
 }
 
 a, a:visited {
-	color: #0c2d63;
+	color: white;
+	font-weight: bold;
 	text-decoration: none;
 }
 
 a:hover {
+	color:#27A8D5;
+	font-weight: bold;
 	text-decoration: underline;
 }
