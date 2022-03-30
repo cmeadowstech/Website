@@ -22,7 +22,7 @@ jobs:
       uses: azure/CLI@v1
       with:
         inlineScript: |
-           az cdn endpoint purge --content-paths  "/*" --profile-name "cmeadowstech-cdn" --name "https://cmeadowstech.azureedge.net" --resource-group "website"
+           az cdn endpoint purge --content-paths  "/*" --profile-name "cmeadowstech-cdn" --name "cmeadowstech" --resource-group "website"
            
   # Azure logout
     - name: logout
