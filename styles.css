@@ -51,47 +51,132 @@ table {
 /* Actual CSS */
 
 body {
-	background-image: url("papyrus.png");
-	font-family: 'Trebuchet MS', sans-serif;
+	font-family: 'Noto Sans', sans-serif;
 	line-height: 1.6em;
 }
 
-#main {
-	filter: drop-shadow(0 0 0.75rem rgba(0,0,0,.2));
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	max-width: 800px;
+.content {
+	width: 50%;
 	margin: auto;
 }
 
-.section_head {
-	background-color: #2B303A;
-	padding: .5em;
-	margin: 0 0 .5em 0;
+#head, #skills, #certifications, #footer {
+	background-color: #003366;
+	background: radial-gradient(circle, rgba(0,51,102,1) 0%, rgba(0,41,82,1) 100%);
 }
 
-.section {
-	background-color: #fafbfc;
-	border-radius: 5px;
+#head .content {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	gap: 8em;
+	justify-content: space-between;
+	padding: 0em;
 }
 
-#head {
-	background-color: #F06543;
-	text-align: center;
+#hero_content {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	gap: 8em;
+	justify-content: center;
+	padding: 3em;
+}
+
+#hero_statement {
+	width: 50%;
+}
+
+#skills_content {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	gap: 8em;
+	justify-content: center;
+	padding: 3em;
+}
+
+.skill_section {
+	color: white;
+	width: 20%;
+}
+
+.skills_header i {
+	display: inline-block;
+	position: relative;
+	top: 3px;
+}
+
+.skills_header h3 {
+	display: inline-block;
+}
+
+#projects, #experience {
+	padding: 5em 0;
+}
+
+#projects_content {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 8em;
+	justify-content: center;
+}
+
+.project {
+	border-left: #a1c3cf solid 3px;
+	margin: 3em 0 0 0;
+	padding: 0em 0 0 2em;
+	width: 40%;
+}
+
+#certifications .content {
+	background-image: url("Logos.png");
+	background-repeat: no-repeat;
+	background-position: right;
+	color: white;
+	padding: 5em 0;
+}
+
+#certs_content {
+	padding-left: 8em;
 }
 
 .company {
-	font-weight: bold;
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 8em;
+	justify-content: space-between;
+	padding: 3em;
 }
 
-.position {
-	font-style: italic;
-	border-bottom: 1px #344869 dashed;
+.company img {
+	flex-grow: 10;
+	max-width: 300px;
+	width: 50%;
 }
 
-#menu {
-	padding: .5em 0;
+.company_desc {
+	flex-grow: 4;
+	padding: 2em 0;
+	width: 50%;
+}
+
+#microsoft {
+	text-align-last: right;
+	
+}
+
+#footer .content {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	gap: 2em;
+	justify-content: center;
+	padding: 0em;
 }
 
 /* Fonts and styling */
@@ -103,26 +188,76 @@ h1 {
 	padding: 1em 0 0 0;
 }
 
+#projects h2, #experience h2 {
+	text-align: center;
+}
+
 h2 {
-	color: #ffffff;
-	font-size: 1.4em;
+	color: #288eb3;
+	font-family: 'Noto Serif', serif;
+	font-size: 2em;
+	padding: 0 0 1em 0;
 	text-transform: uppercase;
 }
 
+#projects h2, #experience h2 {
+	display: flex;
+    flex-direction: row;
+	justify-content: center;
+	margin: auto;
+	width: 40%;
+	}
+
+#projects h2:before, #experience h2:before{
+	content: "";
+	flex: 1 1;
+	border-bottom: 2px solid #a1c3cf;
+	margin: auto;
+	padding: 0 1em;
+	right: 20px;
+	position: relative;
+}
+
+#projects h2:after, #experience h2:after {
+	content: "";
+	flex: 1 1;
+	border-bottom: 2px solid #a1c3cf;
+	margin: auto;
+	padding: 0 1em;
+	left: 20px;
+	position: relative;
+}
+
+#certifications h2 {
+	color: white;
+}
+
 h3 {
+	color: #003366;
+	font-weight: 700;
+}
+
+#skills h3 {
 	color: white;
 }
 
 p {
-	padding: 0 .7em;
+	font-family: 'Noto Sans', sans-serif;
+	text-align: justify;
 }
 
-p.company {
-	color: #27A8D5;
+#skills p {
+	text-align: left;
 }
 
-b {
-	color: #27A8D5;
+#footer p {
+	color: white;
+}
+
+.project_tech {
+	background: rgb(0,28,36);
+	background: linear-gradient(90deg, rgba(0,161,207,0.2049020291710434) 0%, rgba(18,141,173,0.09845945214023111) 35%, rgba(0,212,255,0) 100%);
+	padding: 0 0 0 1em;
 }
 
 .position {
@@ -134,18 +269,23 @@ ul {
 	padding: 0 .7em .7em .7em;
 }
 
-b {
-	font-weight: bold;
-}
-
-a, a:visited {
+#head a, #head a:visited {
 	color: white;
-	font-weight: bold;
+	font-weight: 400;
+	padding: 0 1em;
 	text-decoration: none;
 }
 
-a:hover {
+#head a:hover {
 	color:#27A8D5;
-	font-weight: bold;
-	text-decoration: underline;
+}
+
+#projects a, #projects a:visited {
+	color: #003366;
+	font-weight: 400;
+	text-decoration: none;
+}
+
+#projects a:hover {
+	color:#27A8D5;
 }
