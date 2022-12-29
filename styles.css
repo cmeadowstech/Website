@@ -60,6 +60,14 @@ body {
 	margin: auto;
 }
 
+@media only screen and (max-width: 620px) {
+	/* For mobile phones: */
+	.content {
+		width: 95%;
+		margin: auto;
+	}	
+  }
+
 #head, #skills, #certifications, #footer {
 	background-color: #003366;
 	background: radial-gradient(circle, rgba(0,51,102,1) 0%, rgba(0,41,82,1) 100%);
@@ -126,9 +134,9 @@ body {
 
 .project {
 	border-left: #a1c3cf solid 3px;
+	flex: 2;
 	margin: 3em 0 0 0;
 	padding: 0em 0 0 2em;
-	width: 40%;
 }
 
 #certifications .content {
