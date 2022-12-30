@@ -18,10 +18,10 @@ jobs:
       id: init
       run: terraform init -backend-config=backend.conf
       env:
-        ARM_CLIENT_ID: {{ secrets.ARM_CLIENT_ID }}
-        ARM_CLIENT_SECRET: {{ secrets.ARM_CLIENT_ID }}
-        ARM_SUBSCRIPTION_ID: {{ secrets.ARM_CLIENT_ID }}
-        ARM_TENANT_ID: {{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_CLIENT_ID }}
       working-directory: infra/web
       shell: bash
 
@@ -30,10 +30,10 @@ jobs:
       run: |
         terraform plan -input=false -no-color -out tf.plan
       env:
-        ARM_CLIENT_ID: {{ secrets.ARM_CLIENT_ID }}
-        ARM_CLIENT_SECRET: {{ secrets.ARM_CLIENT_ID }}
-        ARM_SUBSCRIPTION_ID: {{ secrets.ARM_CLIENT_ID }}
-        ARM_TENANT_ID: {{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_CLIENT_ID }}
       working-directory: infra/web
       shell: bash
 
@@ -42,8 +42,8 @@ jobs:
       run: terraform show -no-color tf.plan
       working-directory: infra/web
       env:
-        ARM_CLIENT_ID: {{ secrets.ARM_CLIENT_ID }}
-        ARM_CLIENT_SECRET: {{ secrets.ARM_CLIENT_ID }}
-        ARM_SUBSCRIPTION_ID: {{ secrets.ARM_CLIENT_ID }}
-        ARM_TENANT_ID: {{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_CLIENT_ID }}
       shell: bash
