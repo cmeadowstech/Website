@@ -22,7 +22,7 @@ jobs:
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_ID }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_CLIENT_ID }}
-      working-directory: ./infra/web
+      working-directory: ../infra/web
       shell: bash
 
     - name: Terraform Plan
@@ -34,13 +34,13 @@ jobs:
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_ID }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_CLIENT_ID }}
-      working-directory: ./infra/web
+      working-directory: ../infra/web
       shell: bash
 
     - name: Terraform Show
       id: show
       run: terraform show -no-color tf.plan
-      working-directory: ./infra/web
+      working-directory: ../infra/web
       env:
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_ID }}
