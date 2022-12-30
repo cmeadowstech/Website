@@ -1,8 +1,12 @@
 name: Deploy
 
-on:
-    workflow_dispatch:
+# Thanks to Facundo for his wonderful article on configuring this: https://gaunacode.com/deploying-terraform-at-scale-with-github-actions
 
+on:
+  push:
+    paths:
+    - ./infra/web
+    
 jobs:
   terraform:
     runs-on: ubuntu-latest
