@@ -8,6 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     name: Terraform
     steps:
+    - uses: actions/checkout@v3
+    - uses: azure/login@v1
+      with:
+          creds: ${{ secrets.AZURE_SECRET }}
+
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2
       with:
@@ -22,7 +27,7 @@ jobs:
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_ID }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_CLIENT_ID }}
-      working-directory: ../infra/web
+      working-directory: ./infra/web
       shell: bash
 
     - name: Terraform Plan
@@ -34,13 +39,13 @@ jobs:
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_ID }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_CLIENT_ID }}
-      working-directory: ../infra/web
+      working-directory: ./infra/web
       shell: bash
 
     - name: Terraform Show
       id: show
       run: terraform show -no-color tf.plan
-      working-directory: ../infra/web
+      working-directory: ./infra/web
       env:
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_ID }}
