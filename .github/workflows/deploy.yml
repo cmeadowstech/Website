@@ -4,7 +4,7 @@ name: Deploy
 
 on:
   push:
-    branch:
+    branches:
     - unchained
     - main
     paths:
