@@ -60,14 +60,6 @@ body {
 	margin: auto;
 }
 
-@media only screen and (max-width: 620px) {
-	/* For mobile phones: */
-	.content {
-		width: 95%;
-		margin: auto;
-	}	
-  }
-
 #head, #skills, #certifications, #footer {
 	background-color: #003366;
 	background: radial-gradient(circle, rgba(0,51,102,1) 0%, rgba(0,41,82,1) 100%);
@@ -82,17 +74,24 @@ body {
 	padding: 0em;
 }
 
+#head .content a.icon {
+	display: none;
+}
+
 #hero_content {
 	align-items: center;
 	display: flex;
-	flex-direction: row;
-	gap: 8em;
-	justify-content: center;
+	gap: 2%;
+	justify-content: space-between;
 	padding: 3em;
 }
 
-#hero_statement {
+.hero-lottie {
 	width: 50%;
+}
+
+#hero_statement {
+	width: 50%; 
 }
 
 #skills_content {
@@ -124,19 +123,18 @@ body {
 }
 
 #projects_content {
-	align-items: center;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	gap: 8em;
 	justify-content: center;
+	gap: 4%;
 }
 
 .project {
 	border-left: #a1c3cf solid 3px;
-	flex: 2;
 	margin: 3em 0 0 0;
 	padding: 0em 0 0 2em;
+	max-width: 40%;
 }
 
 #certifications .content {
@@ -238,6 +236,12 @@ h2 {
 
 #certifications h2 {
 	color: white;
+	text-shadow: 5px 5px 10px black;
+}
+
+#certifications li {
+	color: white;
+	text-shadow: 2px 2px 5px black;
 }
 
 h3 {
@@ -297,3 +301,136 @@ ul {
 #projects a:hover {
 	color:#27A8D5;
 }
+
+/*  For Mobile  */
+
+@media only screen and (max-width: 600px) {
+	.content {
+		width: 90%;
+		margin: auto;
+	}
+
+	#head .content {
+		display: block;
+		overflow: hidden;
+		position: relative;
+		width: 100%;
+	}
+
+	#head .content img {
+		padding: 0 1em;
+	}
+
+	#head .content #menu {
+		background-color: #0b1620;
+		display: none;
+	}
+
+	#head a {
+		display: block;
+		right: 0;
+		top: 0;
+	}
+
+	#menu a {
+		padding: .5em;
+		font-size: 1.5em;
+	}
+
+	#head .content a.icon {
+		display: block;
+		position: absolute;
+		top: 10px;
+	}
+
+	#hero_content {
+		display: inline-block;
+	}
+
+	.hero-lottie {
+		width: 0;
+	}
+
+	#hero_statement {
+		width: 100%; 
+		text-align: center;
+	}
+
+	#hero_statement p {
+		text-align: center;
+	}
+
+	#skills_content {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		gap: 1em;
+		justify-content: center;
+		padding: 3em 1em;
+	}
+	
+	.skill_section {
+		color: white;
+		width: 100%;
+	}
+
+	#projects_content {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		gap: 0;
+		justify-content: center;
+	}
+	
+	.project {
+		border-left: #a1c3cf solid 3px;
+		margin: 3em 0 0 0;
+		padding: 0em 0 0 1em;
+		max-width: 90%;
+	}
+	
+	#certifications .content {
+		background: none;
+		padding: 3em 0;
+	}
+
+	#certifications h2 {
+		text-shadow: none;
+		text-align: center;
+	}
+
+	#certifications li {
+		text-shadow: none;
+	}
+
+	#certs_content {
+		padding: 0;
+	}
+
+	.company {
+		display: flex;
+		flex-direction: column;
+		gap: 1em;
+		justify-content: space-between;
+		padding: 1em;
+	}
+	
+	.company img {
+		flex-grow: 10;
+		max-width: 300px;
+		width: 100%;
+	}
+	
+	.company_desc {
+		flex-grow: 4;
+		padding: 2em 0;
+		width: 100%;
+	}
+
+	/* Mobile font sizing */
+
+	p {
+		font-size: 1.2em;
+	}
+
+  }

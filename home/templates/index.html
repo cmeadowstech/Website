@@ -1,10 +1,13 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 
 <head>
-	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="{% static 'styles.css' %}">
+	<link rel="icon" type="image/x-icon" href="{% static 'cm.png' %}">
 
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -17,14 +20,18 @@
 	
 	<section>
 		<div id="head">
-		<div  class="content">
-			<img src="cm.png" width="70px"></img>
+		<div class="content">
+			<img src="{% static 'cm.png' %}" width="70px"></img>
 			<div id="menu">
 				<a href="https://github.com/cmeadowstech">GitHub</a>
 				<a href="https://dev.to/cmeadowstech">Blog</a>
 				<a href="https://www.linkedin.com/in/cody-meadows/">Connect</a>
 			</div>
+			<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+				<i class="material-icons" style="font-size: 3em;">menu</i>
+			</a>
 		</div>
+
 		</div>
 	</section>
 	
@@ -32,7 +39,7 @@
 		<div id="hero">
 		<div class="content">
 			<div id="hero_content">
-				<lottie-player src="https://lottie.host/94c94b5e-de67-4f31-a5b3-137ebb81c467/vLt1DahK2F.json"  background="transparent"  speed="1"  style="width: 400px; height: 400px;"  loop autoplay></lottie-player>
+				<lottie-player class ="hero-lottie" src="https://lottie.host/94c94b5e-de67-4f31-a5b3-137ebb81c467/vLt1DahK2F.json"  background="transparent"  speed="1"  loop autoplay></lottie-player>
 				<div id="hero_statement">
 					<h2>Hi, I'm Cody Meadows</h2>
 					<p>A Cloud Engineer who loves to automate processes to keep your systems running smoothly.</p>
@@ -75,8 +82,23 @@
 	<section>
 		<div id="projects">
 		<div class="content">
+
 			<h2>Projects</h2>
 			<div id="projects_content">
+
+				{% for project in projects %}
+				<div class="project">
+					{% if project.url %}
+						<a href="{{ project.url }}"><h3>{{ project.title}}</h3></a>
+					{% else %}
+						<h3>{{ project.title}}</h3>
+					{% endif %}
+					<p class ="project_tech">{{ project.tech }}</p>
+					<p>{{ project.synopsis }}</p>
+				</div>
+				{% endfor %}
+
+				<!-- 
 				<div class="project">
 					<a href="https://github.com/cmeadowstech/Website"><h3>cmeadows.tech</h3></a>
 					<p class ="project_tech">HTML &#0149; CSS &#0149; Azure Static Webpage</p>
@@ -97,6 +119,8 @@
 					<p class ="project_tech">Linux &#0149; Windows Server &#0149; O365 &#0149; Azure File Share</p>
 					<p>Raspberry PI configured with PiHole for DNS filtering / network protection and Samba for Network Attached Storage. Have also configured Windows Server in a VM, syncronized with M365 via Azure AD Connect and utilizing Azure File Shares.</p>
 				</div>
+				-->
+
 			</div>
 		</div>
 		</div>
@@ -124,7 +148,7 @@
 			<div class="content">
 			<h2>Experience</h2>
 			<div class="company">
-				<img src="microsoft_logo.svg"></img>
+				<img src="{% static 'microsoft_logo.svg' %}"></img>
 				<div class="company_desc" id="microsoft">
 					<h3>Azure Support Engineer</h3>
 					<p>Part of the Azure Integration Support team with a specialization in Logic Apps. Assisted Enterprise, Fortune 500 customers with their business critical integrations by diagnosing services both on-premises and in the cloud. Resolved deployment issues affecting environments from development to production.</p>
@@ -135,7 +159,7 @@
 					<h3>Senior Support Engineer</h3>
 					<p>SME in Microsoft 365. As one of the highest escalation technicians, I put out fires affecting daily operations of companies in the SMB market during a time of increased cloud utilization due to Covid. Trained new hires in Azure Active directory and assisted them daily in case resolution. Created scripts to alleviate uncessary time spend on redundant tasks.</p>
 				</div>
-				<img src="appriver_logo.svg"></img>
+				<img src="{% static 'appriver_logo.svg' %}"></img>
 			</div>
 			</div>
 		</div>
@@ -144,7 +168,7 @@
 	<section>
 		<div id="footer">
 		<div  class="content">
-			<img src="cm.png" width="40px"></img>
+			<img src="{% static 'cm.png' %}" width="40px"></img>
 			<p>Copyright &copy Cody Meadows</p>
 		</div>
 		</div>
@@ -152,6 +176,17 @@
 	
 	<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 	
+	<script>
+		function myFunction() {
+		  var x = document.getElementById("menu");
+		  if (x.style.display === "block") {
+			x.style.display = "none";
+		  } else {
+			x.style.display = "block";
+		  }
+		}
+	</script>
+
 	</body>
 
 </html>
