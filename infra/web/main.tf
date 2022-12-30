@@ -1,3 +1,5 @@
+# Trigger workflow
+
 terraform {
   required_providers {
     azurerm = {
