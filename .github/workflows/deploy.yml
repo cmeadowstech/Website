@@ -4,6 +4,9 @@ name: Deploy
 
 on:
   push:
+    branch:
+    - unchained
+    - main
     paths:
     - infra/web
     
