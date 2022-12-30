@@ -19,6 +19,7 @@ jobs:
         terraform_wrapper: false
 
     - name: Terraform Init
+      uses: hashicorp/setup-terraform@v2
       id: init
       env:
         ARM_CLIENT_ID: {{ secrets.ARM_CLIENT_ID }}
@@ -29,6 +30,7 @@ jobs:
       shell: bash
 
     - name: Terraform Plan
+      uses: hashicorp/setup-terraform@v2
       id: plan
       run: |
         terraform plan -input=false -no-color -out tf.plan
@@ -41,6 +43,7 @@ jobs:
       shell: bash
 
     - name: Terraform Show
+      uses: hashicorp/setup-terraform@v2
       id: show
       run: terraform show -no-color tf.plan
       working-directory: infra/web
