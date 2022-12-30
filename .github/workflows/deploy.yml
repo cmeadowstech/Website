@@ -8,7 +8,7 @@ on:
     - unchained
     - main
     paths:
-    - infra/web
+    - 'infra/web/**'
     
 jobs:
   terraform:
