@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     paths:
-    - ./infra/web
+    - infra/web
 
 jobs:
   terraform:
