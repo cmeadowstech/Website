@@ -1,0 +1,22 @@
+{
+  "location": {
+    "sensitive": false,
+    "type": "string",
+    "value": "eastus"
+  },
+  "rg-name": {
+    "sensitive": false,
+    "type": "string",
+    "value": "website-unchained"
+  },
+  "storage-container": {
+    "sensitive": false,
+    "type": "string",
+    "value": "unchained-state"
+  },
+  "storage-name": {
+    "sensitive": false,
+    "type": "string",
+    "value": "unchainedstorage903845"
+  }
+}
