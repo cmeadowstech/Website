@@ -1,4 +1,4 @@
-name: Static web page CI
+name: Deploy IAC
 
 on:
     workflow_dispatch:
