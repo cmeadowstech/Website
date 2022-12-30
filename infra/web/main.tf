@@ -71,7 +71,7 @@ resource "azurerm_container_group" "example" {
   location            = data.terraform_remote_state.global.outputs.location
   resource_group_name = data.terraform_remote_state.global.outputs.rg-name
   ip_address_type     = "Public"
-  dns_name_label      = "aci-label"
+  dns_name_label      = "test-${random_integer.ri.result}"
   os_type             = "Linux"
 
   container {
