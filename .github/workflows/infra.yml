@@ -1,11 +1,7 @@
 name: Static web page CI
 
 on:
-    push:
-        branches:
-        - unchained
-        paths:
-        - infra/web
+    workflow_dispatch:
 
 jobs:
   terraform:
