@@ -1,5 +1,3 @@
-# Trigger workflow 3
-
 terraform {
   required_providers {
     azurerm = {
@@ -37,6 +35,12 @@ resource "random_integer" "ri" {
   max = 99999
 }
 
+resource "azurerm_storage_container" "static-container" {
+  name = "static"
+  storage_account_name = data.terraform_remote_state.global.outputs.storage-name
+  container_access_type = "blob"
+} 
+
 resource "azurerm_cosmosdb_account" "db" {
   name                = "${var.prefix}-cosmos-db-${random_integer.ri.result}"
   location            = data.terraform_remote_state.global.outputs.location
@@ -66,4 +70,10 @@ resource "azurerm_cosmosdb_account" "db" {
     location = "eastus"
     failover_priority = 0
   }
+}
+
+resource "azurerm_cosmosdb_mongo_database" "unchained-db" {
+  name                = "unchained"
+  resource_group_name = data.terraform_remote_state.global.outputs.rg-name
+  account_name        = azurerm_cosmosdb_account.db.name
 }
