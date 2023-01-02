@@ -77,3 +77,25 @@ resource "azurerm_cosmosdb_mongo_database" "unchained-db" {
   resource_group_name = data.terraform_remote_state.global.outputs.rg-name
   account_name        = azurerm_cosmosdb_account.db.name
 }
+
+resource "azurerm_service_plan" "asp" {
+  name                = "${var.prefix}-asp-${random_integer.ri.result}"
+  location            = data.terraform_remote_state.global.outputs.location
+  resource_group_name = data.terraform_remote_state.global.outputs.rg-name
+
+  os_type = "Linux"
+  sku_name = "B1"
+}
+
+resource "azurerm_app_service" "web-app" {
+  name                = "${var.prefix}-webapp-${random_integer.ri.result}"
+  location            = data.terraform_remote_state.global.outputs.location
+  resource_group_name = data.terraform_remote_state.global.outputs.rg-name
+  app_service_plan_id = azurerm_service_plan.asp.id
+
+  site_config {
+    linux_fx_version = "PYTHON|3.11"
+    ftps_state = "FtpsOnly"
+  }
+}
+
