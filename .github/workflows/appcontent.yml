@@ -3,13 +3,7 @@
 # Build a Python project (using Django/Flask/Bottle frameworks) and deploy it to Azure as a Linux web app.
 name: Deploy Python package
 # https://github.com/Azure/actions-workflow-samples/blob/master/AppService/python-webapp-on-azure.yml as a Linux web app.
-on:
-  push:
-    branches:
-    - unchained
-    - main
-    paths:
-    - 'infra/web/**'
+on: 
   workflow_dispatch:
 
 # CONFIGURATION
