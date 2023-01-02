@@ -50,12 +50,29 @@ jobs:
     with:
      app-name: ${{ env.AZURE_WEBAPP_NAME }}
      mask-inputs: false
-     general-settings-json: '{"linuxFxVersion": "PYTHON|${{ env.PYTHON_VERSION }}",
-                              "ACCOUNT_KEY": "${{ secrets.ACCOUNT_KEY }}",
-                              "DJANGO_DEBUG": "False",
-                              "DJANGO_SECRET_KEY": "${{ secrets.DJANGO_SECRET_KEY }}",
-                              "DJONGO_HOST": "${{ secrets.DJONGO_HOST }}"
-     }' #'General configuration settings as Key Value pairs'
+     app-settings-json: '[
+          {
+            "name": "ACCOUNT_KEY",
+            "value": "${{ secrets.ACCOUNT_KEY }}",
+            "slotSetting": false
+          },
+          {
+            "name": "DJANGO_DEBUG",
+            "value": "False",
+            "slotSetting": false
+          },
+          {
+            "name": "DJANGO_SECRET_KEY",
+            "value": "${{ secrets.DJANGO_SECRET_KEY }}",
+            "slotSetting": false
+          },
+          {
+            "name": "DJONGO_HOST",
+            "value": "${{ secrets.DJONGO_HOST }}",
+            "slotSetting": false
+          }
+        ]'
+     general-settings-json: '{"linuxFxVersion": "PYTHON|${{ env.PYTHON_VERSION }}"}' #'General configuration settings as Key Value pairs'
   # deploy web app
   - uses: azure/webapps-deploy@v2
     with:
