@@ -15,7 +15,7 @@ on:
 #
 # 2. Change these variables for your configuration:
 env:
-  AZURE_WEBAPP_NAME: unchained-webapp-21893 # set this to your application's name
+  AZURE_WEBAPP_NAME: 'unchained-webapp-21893' # set this to your application's name
   WORKING_DIRECTORY: 'app'         # set this to the path to your path of working directory inside github repository, defaults to the repository root
   PYTHON_VERSION: '3.11' 
   STARTUP_COMMAND: ''           # set this to the startup command required to start the gunicorn server. default it is empty
