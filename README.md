@@ -1,94 +1,112 @@
 # Website
-For the Cloud Resume Challenge - https://cloudresumechallenge.dev/docs/the-challenge/azure/
 
-1. ~~Certification~~
-2. ~~HTML~~
-3. ~~CSS~~
-4. ~~Static Website~~
-5. ~~HTTPS~~
-6. ~~DNS~~
-7. Javascript
-8. Database
-9. API
-10. Python
-11. Tests
-12. Infrastructure as Code
-13. Source Control
-14. CI/CD (Back end)
-15. CI/CD (Front end)
-16. Blog post
+- [Website](#website)
+  - [Models and Views](#models-and-views)
+  - [settings.py](#settingspy)
+    - [Cosmos MongoDB](#cosmos-mongodb)
+    - [Azure Storage backend](#azure-storage-backend)
+    - [Security](#security)
+  - [Terraform](#terraform)
+    - [Security](#security-1)
+  - [Pipelines](#pipelines)
+  - [Dockerfile](#dockerfile)
 
----
+This was originally created for the [Cloud Resume Challenge](https://cloudresumechallenge.dev/docs/the-challenge/azure/), but as I've progressed after achieving the AZ-104 certification I decided to break away from its mold a bit. I started to get more focused on Python, and wanted to redo this site with Django.
 
-In my efforts to pick up some skills with Azure, I came across the [Cloud Resume Challenge](https://cloudresumechallenge.dev/docs/the-challenge/azure/) and thought I'd throw myself at it while studying for the AZ-104. It consists of several sections designed to throw you into various skills used when working in the Azure environment - blob storage, CDNs, programming with JavaScript and Python, and automation with Azure Functions and GitHub Actions.
+A little overkill for a single page application, but I thought it was a fun project and it allows me to better expand on my site in the future.
 
-I'm already somewhat familiar with HTML and CSS so while I'm not far into my Azure studies, the first few steps were pretty easy to bang out over the weekend. So here I present to you my new resume website - https://web.cmeadows.tech/
+    ├───app
+    │   ├───cmeadows_tech           # Project folder
+    │   ├───home                    # Main app folder
+    └───infra
+        ├───global                  # Global Terraform IAC
+        └───web                     # Terraform IAC for running app
 
-## Certification
 
-I actually got the AZ-900 last summer. I know, a while between then in and but I was busy getting accustomed to my new L2 position. (There is no L3 at my company, next stop Microsoft) This was really an introductory certification anyways, not one that had you doing much of anything.
+## Models and Views
 
-## HTML
+Pretty straightforward for a single page site. At the moment I have one model for my projects, so in the future I can more easily add, remove and modify them. You know, your basic CRUD opereations.
 
-I've put together a few websites over the years, so a simple static page was pretty quick to get together. It's mostly just some DIVs for each section, and some headers, paragraphs and unordered lists for the contents.
+I would like to create another model for more extensive project descriptions, and use that to provide more information if the visitor is so inclined to follow through.
 
-I mean, look at this. Not trying to undersell my work but I know people would scoff at this being called "web development"
+## settings.py
 
-```
-	<div class="section">
-	<h2 class="head">Certifications & Skills</h2>
-		<ul>
-			<li><b>Certifications:</b> CompTIA Network+, MS-900: Microsoft 365 Fundamentals, AZ-900: Microsoft Azure Fundamentals, CompTIA A+</li>
-			<li><b>Skills:</b> Office 365, Azure, Active Directory, PowerShell, Exchange, DNS, Cloud Security, Remote Access Software, Windows 10, macOS, Android, Microsoft Office</li>
-		</ul>
-	</div>
-```
+### Cosmos MongoDB
 
-## CSS
+To try and save on costs and because I like NoSQL databases, I wanted to put my database up on Cosmos DB. The easiest way to do this was with it's MongoDB api and the [Djongo](https://github.com/doableware/djongo) backend.
 
-This is also pretty straight-forward. I used a basic reset template to normalize everything and made some minor flavor changes. A background image, centered resume, rounded corners, dashed borders. I might add some animation to it if I get bored. 
+This did come with some difficulties though, as the package dependencies were a mess after updates to Python3 and Django itself.
 
-## Static Website
+[This open issue](https://github.com/doableware/djongo/issues/171) has an ongoing conversation on the issue I ran into, and is what helped me correct my dependencies.
 
-Getting into the fun stuff. I hadn't really done anything with blob storage when studying for the AZ-900. Azure Static Webpages made this real easy though - enable it and upload your files to the pre-configured $web container.
+These packages work together:
 
-I did create a PowerShell script to upload my updated files though so I don't have to putz around in the portal. It seemed like most people used AzCopy for this, but I opted for Set-AzStorageBlobContent instead. Partly because I'm more comfortable with PowerShell, partly because I was worried how AzCopy integrates with GitHub Actions down the line.
-
-```
-Connect-AzAccount		# If you have multiple directories you will need to specify with -Tenant
-
-# Set container and context below
-
-$localfolder = "C:\your path here"
-$storageAccount = Get-AzStorageAccount -ResourceGroupName "Your Resource Group" -Name "Name of storage account"
-$Context = $storageAccount.context
-$ContainerName = '$web'
-$Storage = Get-AzStorageBlob -Context $Context -Container '$web'
-$files = Get-ChildItem $localfolder
-
-# Replace files if they exist, and upload them if they don't
-
-foreach ($file in $files) {
-    $name = $file.name
-    $path = "$($localfolder)\$($name)"
-    $blob = Get-AzStorageBlob -Container $ContainerName -Context $Context -Blob $name -ErrorAction:SilentlyContinue
-    if ($blob -eq $null) {
-        Set-AzStorageBlobContent -Container $ContainerName -Context $Context -File $path -Blob $name -Properties @{"ContentType" = [System.Web.MimeMapping]::GetMimeMapping($path)}    # If the file does not currently exist on the container
-    } else {
-        $blob | Set-AzStorageBlobContent -File $path -Properties @{"ContentType" = [System.Web.MimeMapping]::GetMimeMapping($path)} -Force    # If the file does currently exist on the container
-    }
-}
-
-# Purge CDN Endpoint
-Get-AzCdnProfile | Get-AzCdnEndpoint | Unpublish-AzCdnEndpointContent -PurgeContent "/*"	
+```python
+asgiref==3.6.0
+Django==4.1.4
+djongo==1.3.6
+dnspython==2.2.1
+pymongo==3.12.3
+pytz==2022.7           # This  must be installed manually, it is not included in djongo
+sqlparse==0.2.4
+tzdata==2022.7
 ```
 
-## HTTPS
+    Note: Cosmos uses a different port than the default MongoDB port, so you have to specify it in the connection string.
 
-Configuring the CDN was easy, but setting up HTTPS was more of a pain than it should be in my opinion. I mean, enabling it for subdomains is a flip of a switch but it seems inordinately difficult to do so for a root domain. The only options are to buy an expensive certification from someone like DigiCert or a complex automated process to obtain and renew certificates from the common Let's Encrypt.
+### Azure Storage backend
 
-In the future I'll revisit automating Let's Encrypt certificates, but for now I'll opt to use a subdomain for my site.
+I also wanted to use Azure Storage to server my static files, which luckily was pretty straightforward to do with the [Azure Storage backend.](https://django-storages.readthedocs.io/en/latest/backends/azure.html)
 
-## DNS
+```python
+AZURE_ACCOUNT_NAME = "<storage account name>"
+AZURE_CONTAINER = 'static'
+AZURE_ACCOUNT_KEY = '<storage account key>'
+AZURE_OVERWRITE_FILES = 'True'
 
-Azure DNS zones are pretty easy to set up. I had to set my nameservers in NameCheap, but other than that they have an easy gui to point your records to already existing resources like the CDN endpoint I previously configured.
+STATIC_URL = 'static/'
+
+STATIC_DIRS = [
+BASE_DIR / "static"
+]
+```
+
+### Security
+
+Of course, this resulted in a bunch of vulnerabilities if I were to store the connection strings and keys as plaintext in settings.py, so I utilized environment variables, GitHub Secrets, and App Service Settings to secure the important bits.
+
+    DJANGO_SECRET_KEY - Used to update SECRET_KEY in production
+    - Secret = DJANGO_SECRET_KEY
+    DJANGO_DEBUG - Used to disable debug mode in production
+    - No Secret
+    DJONGO_HOST - Used to secure connection string to Cosmos MongoDB
+    - Secret = DJONGO_HOST        
+    ACCOUNT_KEY - Used to secure connection key to Azure Storage hosting static files
+    - Secret = ACCOUNT_KEY
+
+## Terraform
+
+I have two main Terraform configurations:
+
+1. global - This is used to define the resource group and storage account used by both the remote state and static files. Using the same storage account for both probably isn't considered a best practice, but I thought it acceptible for a small personal project where everything would likely share the same lifecycle
+2. web - This defines the infrastructure my Django app needs to run. The Cosmos DB, the static container, and the App Service
+
+### Security
+
+For authentication, I am using a Service Principal and setting the below environment variables during the workflow run, with their values retrieved from repo secrets.
+
+    ARM_CLIENT_ID
+    ARM_CLIENT_SECRET
+    ARM_SUBSCRIPTION_ID 
+    ARM_TENANT_ID 
+
+## Pipelines
+
+Just two pipelines at the moment
+
+1. deploy.yml - Not well-named, but is what I used to deploy my web Terraform configuration. I want to thank Facuno Gauna for his wonderful article on deploying [Terraform with Github ACtions](https://gaunacode.com/deploying-terraform-at-scale-with-github-actions)
+2. appcontent.yml - Used to deploy my app content to the Azure App Service. Using [this sample](https://github.com/Azure/actions-workflow-samples/blob/master/AppService/python-webapp-on-azure.yml) provided by Microsoft, with very minor modifications. 
+
+## Dockerfile
+
+I started creating a Dockerfile with the intention of containerizing, which I still might, but haven't completed due to deciding on Azure App Service hosting instead of a container instance. It really only needs environment variables for settings.py at this point, then publishing somewhere. 
