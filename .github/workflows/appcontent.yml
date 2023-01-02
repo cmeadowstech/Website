@@ -45,11 +45,17 @@ jobs:
   - uses: azure/login@v1
     with:
      creds: ${{ secrets.AZURE_SECRET }}
+  # Application Settings
   - uses: azure/appservice-settings@v1
     with:
      app-name: ${{ env.AZURE_WEBAPP_NAME }}
      mask-inputs: false
-     general-settings-json: '{"linuxFxVersion": "PYTHON|${{ env.PYTHON_VERSION }}"}' #'General configuration settings as Key Value pairs'
+     general-settings-json: '{"linuxFxVersion": "PYTHON|${{ env.PYTHON_VERSION }}",
+                              "ACCOUNT_KEY": "${{ secrets.ACCOUNT_KEY }}",
+                              "DJANGO_DEBUG": "False",
+                              "DJANGO_SECRET_KEY": "${{ secrets.DJANGO_SECRET_KEY }}",
+                              "DJONGO_HOST": "${{ secrets.DJONGO_HOST }}"
+     }' #'General configuration settings as Key Value pairs'
   # deploy web app
   - uses: azure/webapps-deploy@v2
     with:

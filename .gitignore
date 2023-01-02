@@ -1,6 +1,3 @@
-# Until I figure out how to deploy repo SECRET_KEY securely #
-settings.py
- 
 # Django #
 *.log
 *.pot
