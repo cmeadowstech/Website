@@ -87,15 +87,26 @@ resource "azurerm_service_plan" "asp" {
   sku_name = "B1"
 }
 
-resource "azurerm_app_service" "web-app" {
+resource "azurerm_linux_web_app" "web-app" {
   name                = "${var.prefix}-webapp-${random_integer.ri.result}"
   location            = data.terraform_remote_state.global.outputs.location
   resource_group_name = data.terraform_remote_state.global.outputs.rg-name
-  app_service_plan_id = azurerm_service_plan.asp.id
+  service_plan_id = azurerm_service_plan.asp.id
+
+  https_only = true
 
   site_config {
-    linux_fx_version = "PYTHON|3.11"
-    ftps_state = "FtpsOnly"
+    minimum_tls_version = "1.2"
+
+    application_stack {
+      python_version = "3.10"
+    }
   }
+}
+
+resource "azurerm_app_service_source_control" "sourcecontrol" {
+  app_id = azurerm_linux_web_app.web-app.id
+  repo_url = "https://github.com/cmeadowstech/Website"
+  branch = "unchained"
 }
 
