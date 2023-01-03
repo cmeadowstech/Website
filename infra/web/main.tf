@@ -118,5 +118,3 @@ resource "azurerm_app_service_custom_hostname_binding" "custom-hostname" {
   ssl_state           = "SniEnabled"
 }
 
-# Secret trigger
-
