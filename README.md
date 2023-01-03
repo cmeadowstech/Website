@@ -11,9 +11,9 @@
   - [Pipelines](#pipelines)
   - [Dockerfile](#dockerfile)
 
-This was originally created for the [Cloud Resume Challenge](https://cloudresumechallenge.dev/docs/the-challenge/azure/), but as I've progressed after achieving the AZ-104 certification I decided to break away from its mold a bit. I started to get more focused on Python, and wanted to redo this site with Django.
+This was originally created for the [Cloud Resume Challenge](https://cloudresumechallenge.dev/docs/the-challenge/azure/), but as I've progressed after achieving the AZ-104 certification I decided to break away from its mold a bit. I started to get more focused on Python and wanted to redo this site with Django.
 
-A little overkill for a single page application, but I thought it was a fun project and it allows me to better expand on my site in the future.
+A little overkill for a single-page site, but I thought it was a fun project and it allows me to better expand in the future.
 
     ├───app
     │   ├───cmeadows_tech           # Project folder
@@ -25,15 +25,15 @@ A little overkill for a single page application, but I thought it was a fun proj
 
 ## Models and Views
 
-Pretty straightforward for a single page site. At the moment I have one model for my projects, so in the future I can more easily add, remove and modify them. You know, your basic CRUD opereations.
+Pretty straightforward for a single-page site. At the moment I have one model for my projects, so in the future I can more easily add, remove and modify them. You know, your basic CRUD operations.
 
-I would like to create another model for more extensive project descriptions, and use that to provide more information if the visitor is so inclined to follow through.
+I would like to create another model for more extensive project descriptions and use that to provide more information if the visitor is so inclined to follow through.
 
 ## settings.py
 
 ### Cosmos MongoDB
 
-To try and save on costs and because I like NoSQL databases, I wanted to put my database up on Cosmos DB. The easiest way to do this was with it's MongoDB api and the [Djongo](https://github.com/doableware/djongo) backend.
+To try and save on costs and because I like NoSQL databases, I wanted to put my database up on Cosmos DB. The easiest way to do this was with its MongoDB API and the [Djongo](https://github.com/doableware/djongo) backend.
 
 This did come with some difficulties though, as the package dependencies were a mess after updates to Python3 and Django itself.
 
@@ -56,7 +56,7 @@ tzdata==2022.7
 
 ### Azure Storage backend
 
-I also wanted to use Azure Storage to server my static files, which luckily was pretty straightforward to do with the [Azure Storage backend.](https://django-storages.readthedocs.io/en/latest/backends/azure.html)
+I also wanted to use Azure Storage to serve my static files, which luckily was pretty straightforward to set up with the [Azure Storage backend.](https://django-storages.readthedocs.io/en/latest/backends/azure.html)
 
 ```python
 AZURE_ACCOUNT_NAME = "<storage account name>"
@@ -88,7 +88,7 @@ Of course, this resulted in a bunch of vulnerabilities if I were to store the co
 
 I have two main Terraform configurations:
 
-1. global - This is used to define the resource group and storage account used by both the remote state and static files. Using the same storage account for both probably isn't considered a best practice, but I thought it acceptible for a small personal project where everything would likely share the same lifecycle
+1. global - This is used to define the resource group and storage account used by both the remote state and static files. Using the same storage account for both probably isn't considered a best practice, but I thought it acceptable for a small personal project where everything would likely share the same lifecycle
 2. web - This defines the infrastructure my Django app needs to run. The Cosmos DB, the static container, and the App Service
 
 ### Security
@@ -104,7 +104,7 @@ For authentication, I am using a Service Principal and setting the below environ
 
 Just two pipelines at the moment
 
-1. deploy.yml - Not well-named, but is what I used to deploy my web Terraform configuration. I want to thank Facuno Gauna for his wonderful article on deploying [Terraform with Github ACtions](https://gaunacode.com/deploying-terraform-at-scale-with-github-actions)
+1. deploy.yml - Not well-named, but is what I used to deploy my web Terraform configuration. I want to thank Facuno Gauna for his wonderful article on deploying [Terraform with Github Actions](https://gaunacode.com/deploying-terraform-at-scale-with-github-actions)
 2. appcontent.yml - Used to deploy my app content to the Azure App Service. Using [this sample](https://github.com/Azure/actions-workflow-samples/blob/master/AppService/python-webapp-on-azure.yml) provided by Microsoft, with very minor modifications. 
 
 ## Dockerfile
