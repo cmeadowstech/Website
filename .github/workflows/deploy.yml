@@ -59,7 +59,7 @@ jobs:
       shell: bash
 
     - uses: azure/appservice-settings@v1
-      with:
+      with: ${{ env.AZURE_WEBAPP_NAME }}
       app-name: ${{ env.AZURE_WEBAPP_NAME }}
       mask-inputs: false
       app-settings-json: '[
