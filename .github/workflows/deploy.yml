@@ -9,7 +9,15 @@ on:
     - main
     paths:
     - 'infra/web/**'
-    
+
+env:
+  AZURE_WEBAPP_NAME: 'unchained-webapp-21893' 
+  PYTHON_VERSION: '3.10' 
+  ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+  ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+  ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+  ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
 jobs:
   terraform:
     runs-on: ubuntu-latest
@@ -29,11 +37,6 @@ jobs:
     - name: Terraform Init
       id: init
       run: terraform init -backend-config=backend.conf
-      env:
-        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       working-directory: ./infra/web
       shell: bash
 
@@ -41,11 +44,6 @@ jobs:
       id: plan
       run: |
         terraform plan -input=false -no-color -out tf.plan
-      env:
-        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       working-directory: ./infra/web
       shell: bash
 
@@ -53,19 +51,37 @@ jobs:
       id: show
       run: terraform show -no-color tf.plan
       working-directory: ./infra/web
-      env:
-        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       shell: bash
 
     - name: Terraform Apply
       run: terraform apply -input=false tf.plan
-      env:
-        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       working-directory: ./infra/web
       shell: bash
+
+    - uses: azure/appservice-settings@v1
+      with:
+      app-name: ${{ env.AZURE_WEBAPP_NAME }}
+      mask-inputs: false
+      app-settings-json: '[
+            {
+              "name": "ACCOUNT_KEY",
+              "value": "${{ secrets.ACCOUNT_KEY }}",
+              "slotSetting": false
+            },
+            {
+              "name": "DJANGO_DEBUG",
+              "value": "False",
+              "slotSetting": false
+            },
+            {
+              "name": "DJANGO_SECRET_KEY",
+              "value": "${{ secrets.DJANGO_SECRET_KEY }}",
+              "slotSetting": false
+            },
+            {
+              "name": "DJONGO_HOST",
+              "value": "${{ secrets.DJONGO_HOST }}",
+              "slotSetting": false
+            }
+          ]'
+      general-settings-json: '{"linuxFxVersion": "PYTHON|${{ env.PYTHON_VERSION }}"}' #'General configuration settings as Key Value pairs'

@@ -107,6 +107,14 @@ resource "azurerm_linux_web_app" "web-app" {
 resource "azurerm_app_service_source_control" "sourcecontrol" {
   app_id = azurerm_linux_web_app.web-app.id
   repo_url = "https://github.com/cmeadowstech/Website"
-  branch = "unchained"
+  branch = "main"
+}
+
+resource "azurerm_app_service_custom_hostname_binding" "custom-hostname" {
+  hostname            = "cmeadows.tech"
+  app_service_name    = azurerm_linux_web_app.web-app.name
+  resource_group_name = data.terraform_remote_state.global.outputs.rg-name
+
+  ssl_state           = "SniEnabled"
 }
 
