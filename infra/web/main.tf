@@ -104,13 +104,6 @@ resource "azurerm_linux_web_app" "web-app" {
   }
 }
 
-resource "azurerm_app_service_source_control" "sourcecontrol" {
-  app_id = azurerm_linux_web_app.web-app.id
-  repo_url = "https://github.com/cmeadowstech/Website"
-  branch = "main"
-  use_manual_integration = true
-}
-
 resource "azurerm_app_service_custom_hostname_binding" "custom-hostname" {
   hostname            = "cmeadows.tech"
   app_service_name    = azurerm_linux_web_app.web-app.name
