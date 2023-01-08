@@ -1,0 +1,183 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
+<head>
+	<link rel="stylesheet" href="{% static 'styles.css' %}">
+	<link rel="icon" type="image/x-icon" href="{% static 'cm.png' %}">
+
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<script src="https://unpkg.com/htmx.org@1.8.4"></script>
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Noto+Serif:wght@700&display=swap" rel="stylesheet"> 
+</head>
+
+<body>
+	
+	<section>
+		<div id="head">
+		<div class="content">
+			<img src="{% static 'cm.png' %}" width="70px"></img>
+			<div id="menu">
+				<a href="https://github.com/cmeadowstech">GitHub</a>
+				<a href="https://dev.to/cmeadowstech">Blog</a>
+				<a href="https://www.linkedin.com/in/cody-meadows/">Connect</a>
+			</div>
+			<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+				<i class="material-icons" style="font-size: 3em;">menu</i>
+			</a>
+		</div>
+
+		</div>
+	</section>
+	
+	<section>
+		<div id="hero">
+		<div class="content">
+			<div id="hero_content">
+				<lottie-player class ="hero-lottie" src="https://lottie.host/94c94b5e-de67-4f31-a5b3-137ebb81c467/vLt1DahK2F.json"  background="transparent"  speed="1"  loop autoplay></lottie-player>
+				<div id="hero_statement">
+					<h2>Hi, I'm Cody Meadows</h2>
+					<p>A Cloud Engineer who loves to automate processes to keep your systems running smoothly.</p>
+				</div>
+			</div>
+		</div>
+		</div>
+	</section>
+		
+	<section>
+		<div id="skills">
+		<div class="content">
+			<div id="skills_content">
+				<div class="skill_section">
+					<div class="skills_header">
+						<i class="material-icons">assignment</i>
+						<h3>Skills</h3>
+					</div>
+					<p>Azure, Git, Rest APIs, Microsoft 365, Scripting, Troubleshooting</p>
+				</div>
+				<div class="skill_section">
+					<div class="skills_header">
+						<i class="material-icons">build</i>
+						<h3>Tools</h3>
+					</div>
+					<p>GitHub, Visual Studio Code, Azure DevOps, Terraform, Fiddler</p>
+				</div>
+				<div class="skill_section">
+					<div class="skills_header">
+						<i class="material-icons">language</i>
+						<h3>Languages</h3>
+					</div>
+					<p>Python, PowerShell, Kusto Query Language, HTML, CSS</p>
+				</div>
+			</div>
+		</div>
+		</div>
+	</section>
+		
+	<section>
+		<div id="projects">
+		<div class="content">
+				{% block projects %}{% endblock %}
+		</div>
+		</div>
+	</section>
+
+	<section>
+		<div id="certifications">
+			<div class="content">
+				<div id="certs_content">
+				<h2>Certifications</h2>
+				<ul>
+					<li>AZ-104: Azure Administrator Associate</li>
+					<li>CompTIA Network+</li>
+					<li>MS-900: Microsoft 365 Fundamentals </li>
+					<li>AZ-900: Microsoft Azure Fundamentals</li>
+					<li>CompTIA A+</li>
+				</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section>
+		<div id="experience">
+			<div class="content">
+			<h2>Experience</h2>
+			<div class="company">
+				<img src="{% static 'microsoft_logo.svg' %}"></img>
+				<div class="company_desc" id="microsoft">
+					<h3>Azure Support Engineer</h3>
+					<p>Part of the Azure Integration Support team with a specialization in Logic Apps. Assisted Enterprise, Fortune 500 customers with their business critical integrations by diagnosing services both on-premises and in the cloud. Resolved deployment issues affecting environments from development to production.</p>
+				</div>
+			</div>
+			<div class="company">
+				<div class="company_desc">
+					<h3>Senior Support Engineer</h3>
+					<p>SME in Microsoft 365. As one of the highest escalation technicians, I put out fires affecting daily operations of companies in the SMB market during a time of increased cloud utilization due to Covid. Trained new hires in Azure Active directory and assisted them daily in case resolution. Created scripts to alleviate uncessary time spend on redundant tasks.</p>
+				</div>
+				<img src="{% static 'appriver_logo.svg' %}"></img>
+			</div>
+			</div>
+		</div>
+	</section>
+
+	<section>
+		<div id="footer">
+		<div  class="content">
+			<img src="{% static 'cm.png' %}" width="40px"></img>
+			<p>Copyright &copy Cody Meadows</p>
+		</div>
+		</div>
+	</section>
+	
+	<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+	
+	<script>
+		function myFunction() {
+		  var x = document.getElementById("menu");
+		  if (x.style.display === "block") {
+			x.style.display = "none";
+		  } else {
+			x.style.display = "block";
+		  }
+		}
+
+		// Get the modal
+		var modal = document.getElementById("myModal");
+
+		// Get the button that opens the modal
+		var btn = document.getElementsByClassName("project");
+
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];
+
+		// When the user clicks on the button, open the modal
+		for (var i=0; i < btn.length; i++) {
+			btn[i].onclick = function() {
+				modal.style.display = "block";
+			}
+		}
+
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function() {
+			modal.style.display = "none";
+		}
+
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+		if (event.target == modal) {
+		    modal.style.display = "none";
+		}
+		} 
+	</script>
+
+	</body>
+
+</html>

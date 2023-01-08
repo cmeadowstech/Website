@@ -21,4 +21,5 @@ from home import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('admin/', admin.site.urls),
+    path('project/<str:slug>/', views.projectDetailView.as_view(), name='project-detail')
 ]
